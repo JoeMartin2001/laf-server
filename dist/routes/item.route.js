@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const pagination_1 = require("../common/pagination");
+const item_controller_1 = require("../controllers/item.controller");
+const Item_1 = require("../models/Item");
+const itemRouter = express_1.Router();
+itemRouter.post("/createItem", item_controller_1.createItem);
+itemRouter.get("/getItemById/:id", item_controller_1.getItemById);
+itemRouter.get("/getAllItems", pagination_1.usePagination(Item_1.Item, "user", { email: 1, fullName: 1, phone: 1 }), item_controller_1.getAllItems);
+exports.default = itemRouter;

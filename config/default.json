@@ -1,0 +1,5 @@
+{
+  "jwtPrivateKey": "jwtPrivateKey",
+  "PORT": "PORT",
+  "mongoURI": "mongoURI"
+}

@@ -1,10 +1,9 @@
-import { NextFunction } from "express";
-import { Model } from "mongoose";
-import { Item, ItemType } from "../models/Item";
-import { UserType } from "../models/User";
+import { NextFunction } from 'express';
+import { Model } from 'mongoose';
+import { ItemType } from '../models/Item';
 
 export function usePagination(
-  model: Model<UserType | ItemType>,
+  model: Model<ItemType | any>,
   population?: String,
   populators?: Object
 ) {
@@ -36,7 +35,7 @@ export function usePagination(
 
     results.limit = limit;
 
-    const cs = caseType === "All" ? { $in: ["Lost", "Found"] } : caseType;
+    const cs = caseType === 'All' ? { $in: ['Lost', 'Found'] } : caseType;
 
     try {
       const query = await model
@@ -53,7 +52,7 @@ export function usePagination(
       results.results = query;
       res.paginatedResults = results;
       next();
-    } catch (e) {
+    } catch (e: any) {
       res.status(500).json({ message: e.message });
     }
   };

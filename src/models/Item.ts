@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import Joi, { date, number, string } from 'joi';
+import mongoose from 'mongoose';
 
 export type ItemType = {
   title: String;
@@ -11,6 +12,9 @@ const ItemSchema = new mongoose.Schema<ItemType>({
   case: {
     type: String,
     required: true,
+  },
+  imgUrl: {
+    type: String,
   },
   title: {
     type: String,
@@ -34,9 +38,24 @@ const ItemSchema = new mongoose.Schema<ItemType>({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
 });
 
-export const Item = mongoose.model("Item", ItemSchema);
+export const validateItem = (body: any) => {
+  const joiSchema = Joi.object({
+    case: string().min(3).required(),
+    imgUrl: string().min(3),
+    title: string().min(3).required(),
+    phone: number().min(3).required(),
+    region: string().min(3).required(),
+    date: date(),
+    description: string().min(3).required(),
+    user: string().min(3).required(),
+  });
+
+  return joiSchema.validate(body);
+};
+
+export const Item = mongoose.model('Item', ItemSchema);

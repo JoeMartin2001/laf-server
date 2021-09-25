@@ -1,16 +1,31 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Error } from 'mongoose';
-import { Item, ItemType } from '../models/Item';
+import { uploadImage } from '../common/helpers';
+import { Item, ItemType, validateItem } from '../models/Item';
 
 /* CREATE ITEM START */
-export const createItem = async (req: Request, res: Response) => {
-  const newItem = new Item(req.body);
+export const createItem = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (validateItem(req.body).error) {
+    res.status(500).json(validateItem(req.body).error?.message);
+  }
 
   try {
+    const myFile = req.file;
+    const imgUrl = await uploadImage(myFile);
+
+    const newItem = new Item({ ...req.body, imgUrl });
     await newItem.save();
-    res.status(201).json({ msg: 'Item has successfully been uploaded!' });
+
+    res.status(200).json({
+      message: 'Upload was successful',
+      data: newItem,
+    });
   } catch (error) {
-    res.status(409).json({ msg: 'Error: ' + error.message });
+    next(error);
   }
 };
 

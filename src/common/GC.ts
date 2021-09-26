@@ -1,9 +1,6 @@
 import { Storage } from '@google-cloud/storage';
 import path from 'path';
-const serviceKey = path.join(
-  __dirname,
-  '../../lostandfound-327009-3e45c415f14c.json'
-);
+const serviceKey = path.join(__dirname, '../../google-cloud-keys.json');
 
 const storage = new Storage({
   keyFilename: serviceKey,

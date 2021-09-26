@@ -53,6 +53,8 @@ export const validateItem = (body: any) => {
     date: date(),
     description: string().min(3).required(),
     user: string().min(3).required(),
+    file: string().min(3).required(),
+    fileName: string().min(3).required(),
   });
 
   return joiSchema.validate(body);

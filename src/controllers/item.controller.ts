@@ -10,21 +10,26 @@ export const createItem = async (
   next: NextFunction
 ) => {
   if (validateItem(req.body).error) {
-    res.status(500).json(validateItem(req.body).error?.message);
+    console.log('validation error');
+    return res.status(500).json(validateItem(req.body).error?.message);
   }
 
   try {
-    const myFile = req.file;
-    const imgUrl = await uploadImage(myFile);
+    // const image = fs.writeFileSync('image.jpg', buffer);
+    const myFile = {
+      buffer: Buffer.from(req.body.file, 'base64'),
+      originalname: `${Date.now()}--${req.body.fileName}`,
+    };
 
+    const imgUrl = await uploadImage(myFile);
     const newItem = new Item({ ...req.body, imgUrl });
     await newItem.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       message: 'Upload was successful',
-      data: newItem,
     });
   } catch (error) {
+    res.status(500).json({ msg: 'Error to save your item!' });
     next(error);
   }
 };

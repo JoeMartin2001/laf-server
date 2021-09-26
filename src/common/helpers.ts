@@ -25,6 +25,7 @@ export const uploadImage = (file: any) =>
         resolve(publicUrl);
       })
       .on('error', (err) => {
+        console.log(err);
         reject(`Unable to upload item, something went wrong`);
       })
       .end(buffer);

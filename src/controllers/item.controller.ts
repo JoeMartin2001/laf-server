@@ -40,7 +40,6 @@ export const getItemById = (req: Request, res: Response) => {
     .populate('user')
     .exec((err: Error, item: ItemType) => {
       if (err) throw new Error(err.message);
-      console.log(item);
       res.status(200).json(item);
     });
 };

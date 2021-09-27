@@ -1,16 +1,18 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   registerUser,
   login,
   getUserById,
   updateUserById,
-} from "../controllers/auth.controller";
+  updateUserAvatarId,
+} from '../controllers/auth.controller';
 
 const authRouter = Router();
 
-authRouter.post("/register", registerUser);
-authRouter.post("/login", login);
-authRouter.get("/getUserById/:id", getUserById);
-authRouter.post("/updateUserById", updateUserById);
+authRouter.post('/register', registerUser);
+authRouter.post('/login', login);
+authRouter.get('/getUserById/:id', getUserById);
+authRouter.post('/updateUserById/:id', updateUserById);
+authRouter.post('/updateUserAvatarId/:id', updateUserAvatarId);
 
 export default authRouter;

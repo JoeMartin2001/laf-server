@@ -1,5 +1,5 @@
-import Joi, { number, string } from "joi";
-import { model, Schema } from "mongoose";
+import Joi, { number, string } from 'joi';
+import { model, Schema } from 'mongoose';
 
 export type UserType = {
   email: string;
@@ -20,6 +20,9 @@ const UserSchema = new Schema<UserType>({
   username: {
     type: String,
     required: true,
+  },
+  avatarUrl: {
+    type: String,
   },
   password: {
     type: String,
@@ -47,4 +50,4 @@ export const validateAuth = (body: any) => {
   return joiSchema.validate(body);
 };
 
-export const User = model("User", UserSchema);
+export const User = model('User', UserSchema);
